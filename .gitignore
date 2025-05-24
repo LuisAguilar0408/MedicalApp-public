@@ -1,0 +1,14 @@
+# Build results
+**/bin/
+**/obj/
+
+# Visual Studio folders
+.vs/
+
+# User-specific files
+*.user
+*.suo
+
+# Others
+*.log
+*.tmp

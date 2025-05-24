@@ -1,0 +1,119 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SoftMA_Doctor.Master.cs" Inherits="SoftWA.SoftMA_Doctor" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/Fonts/css/all.css" rel="stylesheet" />
+    <link href="Content/site.css" rel="stylesheet" />
+
+    <script src="Scripts/jquery-3.7.1.js"></script>
+    <script src="Scripts/bootstrap.bundle.js"></script>
+
+    <title>
+        <asp:ContentPlaceHolder ID="chpTitulo" runat="server">
+        </asp:ContentPlaceHolder>
+    </title>
+    <style>
+        .navbar-nav .nav-link {
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                text-align: center;
+                font-size: 1.2rem;
+            }
+            .navbar-brand span {
+                display: none;
+            }
+            .desktop-user {
+                display: none !important;
+            }
+            .mobile-user {
+                display: inline-block !important;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-user {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-md" style="background-color: #5bd3c5;">
+            <div class="container-fluid">
+                <!-- Botón hamburguesa -->
+                <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarOpciones" aria-controls="navbarOpciones" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a class="navbar-brand d-flex align-items-center" href="index.aspx">
+                    <img src="Images/op3.png" alt="Logo" width="40" class="me-0">
+                </a>
+
+                <!-- Opciones de navegación -->
+                <div class="collapse navbar-collapse" id="navbarOpciones">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="doctor_agenda.aspx"><i class="fa-solid fa-calendar-days me-1"></i>Agenda de citas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="doctor_historial.aspx"><i class="fa-solid fa-list-check me-1"></i>Historial de citas</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Usuario Desktop -->
+                <div class="dropdown desktop-user">
+                    <button class="btn btn-outline-light dropdown-toggle" id="btnUsuario" data-bs-toggle="dropdown" type="button">
+                        <i class="fas fa-user me-2"></i>Medico0001
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="btnUsuario">
+                        <li class="nav-item">
+                            <a class="nav-link" href="perfil_medico.aspx"><i class="fa-solid fa-id-badge me-1"></i>Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-key me-1"></i>Cambiar Contraseña</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="indexLogin.aspx"><i class="fa-solid fa-right-from-bracket me-1"></i>Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Usuario Móvil -->
+                <div class="dropdown mobile-user">
+                    <button class="btn btn-outline-light" id="btnUsuarioMovil" data-bs-toggle="dropdown" type="button">
+                        <i class="fas fa-user"></i> <i class="fas fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="btnUsuarioMovil">
+                        <li class="nav-item">
+                            <a class="nav-link" href="perfil_medico.aspx"><i class="fa-solid fa-id-badge me-1"></i>Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-key me-1"></i>Cambiar Contraseña</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="indexLogin.aspx"><i class="fa-solid fa-right-from-bracket me-1"></i>Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Contenido principal -->
+        <div class="p-4">
+            <asp:ContentPlaceHolder ID="cphContenido" runat="server" />
+        </div>
+    </form>
+</body>
+</html>
+
