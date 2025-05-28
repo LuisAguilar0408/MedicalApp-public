@@ -6,7 +6,7 @@ using System.Text; // Para Encoding
 using System.Threading.Tasks; // Para Task
 using Newtonsoft.Json; // Para JsonConvert
 
-namespace SoftWA.Services
+namespace SoftWA.softapi.services // <<< MODIFICADO
 {
     public class AuthService
     {
