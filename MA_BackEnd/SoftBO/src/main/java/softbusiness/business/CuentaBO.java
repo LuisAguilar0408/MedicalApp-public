@@ -27,7 +27,7 @@ public class CuentaBO {
         this.idPersona=id;
     }
     
-    protected Integer getIdCuenta() {
+    public Integer getIdCuenta() {
         return idCuenta;
     }
 

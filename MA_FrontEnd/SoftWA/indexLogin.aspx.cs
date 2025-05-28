@@ -4,38 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using SoftWA.Models;
+using SoftWA.Services; // <<< AÑADIDO
+using System.Threading.Tasks; // <<< AÑADIDO
 
 namespace SoftWA
 {
-    // Define RolUsuario and Usuario class here if not defined elsewhere
-    public enum RolUsuario
-    {
-        Admin,
-        Doctor,
-        Paciente
-    }
-
-    public class Usuario
-    {
-        public string DNI { get; set; }
-        public string Password { get; set; } // ejemplo
-        public RolUsuario Rol { get; set; }
-    }
+    // La clase Usuario y la lista usuariosRegistrados han sido eliminadas.
 
     public partial class indexLogin : System.Web.UI.Page
     {
-        private static readonly List<Usuario> usuariosRegistrados = new List<Usuario>
-        {
-            // Administrador
-            new Usuario { DNI = "ADM018", Password = "admin", Rol = RolUsuario.Admin },
-            // Doctores
-            new Usuario { DNI = "22222222", Password = "doctor", Rol = RolUsuario.Doctor },
-            new Usuario { DNI = "33333333", Password = "doctor_pass2", Rol = RolUsuario.Doctor },
-            // Pacientes
-            new Usuario { DNI = "44444444", Password = "paciente", Rol = RolUsuario.Paciente },
-            new Usuario { DNI = "55555555", Password = "paciente_pass2", Rol = RolUsuario.Paciente },
-            new Usuario { DNI = "66666666", Password = "paciente_pass3", Rol = RolUsuario.Paciente }
-        };
+        private AuthService _authService = new AuthService(); // <<< AÑADIDO
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -51,24 +30,31 @@ namespace SoftWA
             {
                 return;
             }
+            // Registrar la tarea asíncrona
+            RegisterAsyncTask(new PageAsyncTask(AttemptLoginAsync));
+        }
 
+        private async Task AttemptLoginAsync()
+        {
             string dniIngresado = txtDNI.Text.Trim();
             string passwordIngresado = txtPassword.Text;
 
-            Usuario usuarioAutenticado = usuariosRegistrados.FirstOrDefault(u =>
-                u.DNI.Equals(dniIngresado, StringComparison.OrdinalIgnoreCase) &&
-                u.Password == passwordIngresado
-            );
-
-            if (usuarioAutenticado != null)
+            LoginRequestModel requestModel = new LoginRequestModel
             {
-                Session["UsuarioLogueado_DNI"] = usuarioAutenticado.DNI;
-                Session["UsuarioLogueado_Rol"] = usuarioAutenticado.Rol;
+                NumeroDoc = dniIngresado,
+                Contrasenha = passwordIngresado
+            };
 
+            LoginResponseModel responseModel = await _authService.LoginAsync(requestModel);
 
-                string targetUrl = "~/Default.aspx";
+            if (responseModel != null && responseModel.Exito)
+            {
+                Session["UsuarioLogueado_DNI"] = responseModel.NumeroDoc; // O responseModel.IdCuenta si se prefiere
+                Session["UsuarioLogueado_Rol"] = responseModel.Rol;
 
-                switch (usuarioAutenticado.Rol)
+                string targetUrl = "~/indexLogin.aspx"; // URL por defecto si algo sale mal con el rol
+
+                switch (responseModel.Rol)
                 {
                     case RolUsuario.Admin:
                         targetUrl = "~/indexAdmin.aspx";
@@ -79,13 +65,18 @@ namespace SoftWA
                     case RolUsuario.Paciente:
                         targetUrl = "~/indexPaciente.aspx";
                         break;
+                    default:
+                        // Si el rol es Desconocido o no coincide, podría ser un error o un caso no manejado.
+                        // Mantenerlo en login o redirigir a una página de error específica.
+                        MostrarError("Rol de usuario no reconocido recibido del servidor.");
+                        return; // No redirigir
                 }
-
-                Response.Redirect(targetUrl, false);
+                Response.Redirect(targetUrl, false); // false para no abortar el hilo actual si hay más procesamiento en la página (aunque aquí es lo último)
             }
             else
             {
-                MostrarError("DNI o contraseña incorrectos. Por favor, intente de nuevo.");
+                string errorMessage = responseModel?.Mensaje ?? "Error desconocido durante el login.";
+                MostrarError(errorMessage);
                 txtPassword.Text = string.Empty;
                 txtPassword.Focus();
             }
