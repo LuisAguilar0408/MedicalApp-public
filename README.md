@@ -28,21 +28,12 @@ Un agradecimiento especial a todo el equipo por su increíble trabajo y colabora
 
 Características Principales
 
-*   **Búsqueda y filtrado personalizado:** Permite a los pacientes buscar citas aplicando filtros por especialidad,
-*   médico, fecha y hora.
-*   
-*   **Agendamiento y confirmación:** Los pacientes pueden reservar citas en línea y reciben una confirmación automática
-*   por correo electrónico una vez completado el proceso.
-*   
+*   **Búsqueda y filtrado personalizado:** Permite a los pacientes buscar citas aplicando filtros por especialidad, médico, fecha y hora.
+*   **Agendamiento y confirmación:** Los pacientes pueden reservar citas en línea y reciben una confirmación automática por correo electrónico una vez completado el proceso.
 *   **Historial de citas:** Tanto pacientes como médicos pueden consultar el historial de citas realizadas.
-*   
-*   **Gestión de calendarios:** Facilita a los médicos y administradores gestionar y visualizar sus horarios
-*   de atención de manera organizada.
-*   
+*   **Gestión de calendarios:** Facilita a los médicos y administradores gestionar y visualizar sus horarios de atención de manera organizada.
 *   **Recordatorios automáticos:** El sistema puede enviar recordatorios a los pacientes para sus próximas citas.
-
-*   **Registro seguro:** Los nuevos usuarios se registran con validación de identidad (DNI o Carnet de Extranjería)
-*   a través de una API externa y reciben un código de verificación único por correo electrónico.
+*   **Registro seguro:** Los nuevos usuarios se registran con validación de identidad (DNI o Carnet de Extranjería) a través de una API externa y reciben un código de verificación único por correo electrónico.
 
 ---
 
